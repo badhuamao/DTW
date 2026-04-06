@@ -1,7 +1,9 @@
 import requests
 import json
-import base64
 import urllib.parse
+
+# 禁用 SSL 警告
+requests.packages.urllib3.disable_warnings()
 
 URLS = [
     "https://www.gitlabip.xyz/Alvin9999/PAC/refs/heads/master/backup/img/1/2/ipp/hysteria2/1/config.json",
@@ -9,31 +11,34 @@ URLS = [
 ]
 
 def get_node():
-    headers = {'User-Agent': 'Mozilla/5.0'}
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'}
     for url in URLS:
         try:
             r = requests.get(url, timeout=15, headers=headers, verify=False)
             if r.status_code == 200:
                 data = r.json()
                 raw_server = data.get('server', '')
-                auth = data.get('auth', '')
-                sni = data.get('tls', {}).get('sni', 'www.microsoft.com')
+                auth = data.get('auth', 'dongtaiwang.com')
+                # 优先级：云端 SNI > 微软伪装
+                sni = data.get('tls', {}).get('sni') or 'www.microsoft.com'
                 
-                # 1. 修复端口逻辑
+                # 1. 提取主端口 (处理逗号和范围)
+                clean_server = raw_server.split(",")[0] if "," in raw_server else raw_server
+
+                # 2. 构造【明文版】标准链接 (V2RayN 兼容性最好)
+                # 这里的 auth 不进行 Base64，直接填进去，但要经过 URL 编码
+                safe_auth = urllib.parse.quote(auth)
+                
+                # 加上 mport 参数，万一你想手动开启端口跳跃呢
+                mport = ""
                 if "," in raw_server:
-                    clean_server = raw_server.split(",")[0]
-                else:
-                    clean_server = raw_server
+                    mport = f"&mport={raw_server.split(',', 1)[1]}"
 
-                # 2. 【核心修复】将 auth 进行 Base64 编码，解决识别问题
-                # 这是最符合 HY2 标准且 v2rayN 绝对认识的写法
-                b64_auth = base64.b64encode(auth.encode()).decode()
-
-                # 3. 构造链接（不带 @ 符号前面的明文，直接用编码后的字符串）
-                link = f"hysteria2://{b64_auth}@{clean_server}?sni={sni}&insecure=1&allowInsecure=1#DTW_AutoSync"
+                link = f"hysteria2://{safe_auth}@{clean_server}?sni={sni}&insecure=1&allowInsecure=1{mport}#DTW_AutoSync"
                 
                 return link
-        except:
+        except Exception as e:
+            print(f"Error: {e}")
             continue
     return None
 
