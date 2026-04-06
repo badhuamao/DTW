@@ -1,1 +1,1 @@
-hysteria2://dongtaiwang.com@157.254.223.43:27921,28000-29000?sni=www.bing.com&insecure=1&allowInsecure=1#AutoSync_Node
+hysteria2://dongtaiwang.com@157.254.223.43:27921?sni=www.bing.com&insecure=1&allowInsecure=1#DTW_AutoSync
