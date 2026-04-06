@@ -1,1 +1,4 @@
-hysteria2://dongtaiwang.com@157.254.223.43:27921?sni=www.bing.com&insecure=1&allowInsecure=1#DTW_AutoSync
+hysteria2://dongtaiwang.com@157.254.223.43:27921?sni=www.bing.com&insecure=1&allowInsecure=1#DTW-主力1号
+hysteria2://VNws548Lj/fDRk58HE6dKAcTNpb8%2BiIk%2BycqKEBNG/U%3D@[2a10:3c80:0:f::2]:39463?sni=www.microsoft.com&insecure=1&allowInsecure=1#DTW-主力2号
+hysteria2://dongtaiwang.com@[2001:bc8:32d7:17b::3]:22000?sni=www.microsoft.com&insecure=1&allowInsecure=1#DTW-备用3号
+hysteria2://dongtaiwang.com@[2001:bc8:32d7:17b::3]:22000?sni=www.microsoft.com&insecure=1&allowInsecure=1#DTW-备用4号
