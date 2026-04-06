@@ -2,14 +2,14 @@ name: Daily Node Sync
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 每天 UTC 时间 0点（北京时间早8点）运行
-  workflow_dispatch: # 允许你手动点击运行
+    - cron: '0 2 * * *' # 北京时间每天上午 10 点运行
+  workflow_dispatch: # 支持手动点击按钮运行
 
 jobs:
-  build:
+  sync-task:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -20,13 +20,13 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run sync script
+      - name: Run Sync Script
         run: python sync_node.py
 
-      - name: Commit and Push
+      - name: Commit and Push Changes
         run: |
-          git config --global user.name "GitHub Action"
-          git config --global user.email "action@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add nodes.txt
-          git commit -m "Update latest HY2 node" || exit 0
-          git push
+          git commit -m "Update latest HY2 node $(date +'%Y-%m-%d')" || exit 0
+          git push origin main
