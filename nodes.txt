@@ -1,1 +1,1 @@
-hysteria2://ZG9uZ3RhaXdhbmcuY29t@157.254.223.43:27921?sni=www.bing.com&insecure=1&allowInsecure=1#DTW_AutoSync
+hysteria2://dongtaiwang.com@157.254.223.43:27921?sni=www.bing.com&insecure=1&allowInsecure=1&mport=28000-29000#DTW_AutoSync
